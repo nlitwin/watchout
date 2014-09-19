@@ -35,13 +35,14 @@ function shuffle() {
   return enemyPositions;
 }
 
-shuffle(enemyPositions);
+shuffle();
 
 //initialize enemies
 var enemies = gameBoard.selectAll('circle')
   .data(enemyPositions)
   .enter()
   .append('svg:circle')
+  .attr('class', 'enemies')
   .attr('cx', function(d){
     return d.cx;
   })
@@ -53,18 +54,59 @@ var enemies = gameBoard.selectAll('circle')
     return d.r;
   });
 
-function update(enemyPositions){
+function update(){
   enemies.data(enemyPositions)
-              .transition().duration(800)
-              .attr('cx', function(d){
-                return d.cx;
-              })
-              .attr('cy', function(d){
-                return d.cy;
-              })
-              .attr('fill', 'black')
-              .attr('r', function(d){
-                return d.r;
-              });
+    .transition().duration(1000)
+    .attr('cx', function(d){
+      return d.cx;
+    })
+    .attr('cy', function(d){
+      return d.cy;
+    })
+    .attr('fill', 'black')
+    .attr('r', function(d){
+      return d.r;
+    });
 }
-setInterval(function(){update(shuffle())}, 1000);
+
+setInterval(function(){
+  shuffle();
+  update();
+}, 1000);
+
+var player = gameBoard.selectAll('circle.player')
+  .data([{
+    cx: gameOptions.width / 2,
+    cy: gameOptions.height / 2,
+    r: 10
+  }])
+  .enter()
+  .append('svg:circle')
+  .attr('class', 'player')
+  .attr('cx', function(d){
+    return d.cx;
+  })
+  .attr('cy', function(d){
+    return d.cy;
+  })
+  .attr('fill', 'orange')
+  .attr('r', function(d){
+    return d.r;
+  });
+
+var drag = d3.behavior.drag().on('drag', function(){
+  var newX, newY;
+  if (d3.event.x > gameOptions.width) {
+    newX = gameOptions.width;
+  } else {
+    newX = Math.max(0, d3.event.x);
+  }
+  if (d3.event.y > gameOptions.height) {
+    newY = gameOptions.height;
+  } else {
+    newY = Math.max(0, d3.event.y);
+  }
+  player.attr('cx', newX);
+  player.attr('cy', newY);
+});
+d3.selectAll(".player").call(drag);
