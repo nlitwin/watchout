@@ -52,7 +52,7 @@ shuffle();
 var enemies = gameBoard.selectAll('circle')
   .data(enemyPositions)
   .enter()
-  .append('svg:circle')
+  .append('circle')
   .attr('class', 'enemies')
   .attr('cx', function(d){
     return d.cx;
@@ -61,7 +61,8 @@ var enemies = gameBoard.selectAll('circle')
     return d.cy;
   })
   .attr('r', '10')
-  .attr('fill', 'url(#image)');
+  .attr('fill', 'url(#image)')
+  //.attr('transform', 'rotate(30)');
 
 // Initialize PLAYER
 var player = gameBoard.selectAll('circle.player')
@@ -108,7 +109,8 @@ function tweenWithCollisionDetection(endData){
       y: startPos.y + (endPos.y - startPos.y) * t
     };
     enemy.attr('cx', enemyNextPos.x)
-        .attr('cy', enemyNextPos.y);
+        .attr('cy', enemyNextPos.y)
+        .attr('transform', 'rotate(' + Date.now()%360 + ',' + enemy.attr('cx') + ',' + enemy.attr('cy') + ')');
     gameStats.score += 0.01;
     d3.select('.current span').data([gameStats.score.toFixed(0)])
       .text(function(d){
