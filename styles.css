@@ -4,12 +4,11 @@
 Feel free to use it if you like. */
 
 body {
-  background-image: url('http://freeseamlesstextures.com/images/33-crinkled-paper-background-sml.jpg');
+  background-image: url('./space.jpg');
 
 }
 
 .display {
-  background: white;
   padding: 40px;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -38,9 +37,6 @@ span {
 svg {
   background-color: black;
   opacity: 0.8;
-}
-
-.enemies {
 }
 
 .player {

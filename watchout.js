@@ -21,7 +21,6 @@ gameBoard.append('defs')
           .attr('id', 'image')
           .attr('x', '0')
           .attr('y', '0')
-          //.attr('patternUnits', 'userSpaceOnUse')
           .attr('height', '20')
           .attr('width', '20')
           .append('image')
@@ -29,7 +28,7 @@ gameBoard.append('defs')
           .attr('y', '0')
           .attr('height', '20')
           .attr('width', '20')
-          .attr('xlink:href', './shuriken.png');
+          .attr('xlink:href', './asteroid.jpg');
 
 // Initalize Enemy Data
 
@@ -61,8 +60,7 @@ var enemies = gameBoard.selectAll('circle')
     return d.cy;
   })
   .attr('r', '10')
-  .attr('fill', 'url(#image)')
-  //.attr('transform', 'rotate(30)');
+  .attr('fill', 'url(#image)');
 
 // Initialize PLAYER
 var player = gameBoard.selectAll('circle.player')
@@ -110,7 +108,7 @@ function tweenWithCollisionDetection(endData){
     };
     enemy.attr('cx', enemyNextPos.x)
         .attr('cy', enemyNextPos.y)
-        .attr('transform', 'rotate(' + Date.now()%360 + ',' + enemy.attr('cx') + ',' + enemy.attr('cy') + ')');
+        .attr('transform', 'rotate(' + (Date.now()/3)%360 + ',' + enemy.attr('cx') + ',' + enemy.attr('cy') + ')');
     gameStats.score += 0.01;
     d3.select('.current span').data([gameStats.score.toFixed(0)])
       .text(function(d){
