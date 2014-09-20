@@ -1,13 +1,7 @@
-/* your beautiful css styling goes here! */
-
-/* Note: an asteroid image is included in this repo.
-Feel free to use it if you like. */
-
 body {
   background-image: url('./space.jpg');
 
 }
-
 .display {
   padding: 40px;
   margin-top: 40px;
@@ -16,7 +10,6 @@ body {
   margin-right: auto;
   width: 700px;
 }
-
 .scoreboard {
   font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
@@ -25,7 +18,6 @@ body {
   line-height: 27px;
   margin-left: 70%;
 }
-
 .scoreboard div {
   margin-left: 8px;
 }
@@ -33,12 +25,10 @@ span {
   text-align: right;
   margin-left: 5px;
 }
-
 svg {
   background-color: black;
   opacity: 0.8;
 }
-
 .player {
   fill: orange;
 }

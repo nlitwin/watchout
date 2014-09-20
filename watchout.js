@@ -12,10 +12,12 @@ var gameStats = {
   collisionsThisRound: 0
 };
 
-
-var gameBoard = d3.select('.gameBoard').append('svg:svg')
+// Set up gameBoard
+var gameBoard = d3.select('.gameBoard').append('svg')
                   .attr('width', gameOptions.width)
-                  .attr('height', gameOptions.height)
+                  .attr('height', gameOptions.height);
+
+// Add settings for enemies' background image
 gameBoard.append('defs')
           .append('pattern')
           .attr('id', 'image')
@@ -31,9 +33,7 @@ gameBoard.append('defs')
           .attr('xlink:href', './asteroid.jpg');
 
 // Initalize Enemy Data
-
 var enemyPositions = [];
-
 function shuffle() {
   for (var i = 0; i < gameOptions.nEnemies; i++) {
     var o = {
@@ -44,7 +44,6 @@ function shuffle() {
   }
   return enemyPositions;
 }
-
 shuffle();
 
 // Initialize enemies
@@ -52,7 +51,6 @@ var enemies = gameBoard.selectAll('circle')
   .data(enemyPositions)
   .enter()
   .append('circle')
-  .attr('class', 'enemies')
   .attr('cx', function(d){
     return d.cx;
   })
@@ -70,7 +68,7 @@ var player = gameBoard.selectAll('circle.player')
     r: 10
   }])
   .enter()
-  .append('svg:circle')
+  .append('circle')
   .attr('class', 'player')
   .attr('cx', function(d){
     return d.cx;
@@ -167,8 +165,3 @@ var drag = d3.behavior.drag().on('drag', function(){
 
 });
 d3.selectAll(".player").call(drag);
-
-/*
-var image = document.body.getElementsByClassName('test');
-image.setAttributeNS('w3.org/1999/xlink', 'href', 'shuriken.png')
-*/
