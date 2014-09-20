@@ -17,8 +17,8 @@ var axes = {
 
 var gameBoard = d3.select('.gameBoard').append('svg:svg')
                   .attr('width', gameOptions.width)
-                  .attr('height', gameOptions.height)
-                  .style('background-color', 'white');
+                  .attr('height', gameOptions.height);
+                  //.style('background-color', 'white');
 
 var enemyPositions = [];
 
@@ -49,7 +49,6 @@ var enemies = gameBoard.selectAll('circle')
   .attr('cy', function(d){
     return d.cy;
   })
-  .attr('fill', 'black')
   .attr('r', function(d){
     return d.r;
   });
@@ -63,7 +62,7 @@ function update(){
     .attr('cy', function(d){
       return d.cy;
     })
-    .attr('fill', 'black')
+    //.attr('fill', 'black')
     .attr('r', function(d){
       return d.r;
     });
@@ -89,7 +88,6 @@ var player = gameBoard.selectAll('circle.player')
   .attr('cy', function(d){
     return d.cy;
   })
-  .attr('fill', 'orange')
   .attr('r', function(d){
     return d.r;
   });
@@ -110,3 +108,5 @@ var drag = d3.behavior.drag().on('drag', function(){
   player.attr('cy', newY);
 });
 d3.selectAll(".player").call(drag);
+
+

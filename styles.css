@@ -4,6 +4,46 @@
 Feel free to use it if you like. */
 
 body {
-  background-color: skyblue;
+  background-image: url('http://freeseamlesstextures.com/images/33-crinkled-paper-background-sml.jpg');
+
 }
 
+.display {
+  background: white;
+  padding: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+}
+
+.scoreboard {
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  background-color: gray;
+  font-size: 18px;
+  line-height: 27px;
+  margin-left: 70%;
+}
+
+.scoreboard div {
+  margin-left: 8px;
+}
+span {
+  text-align: right;
+  margin-left: 5px;
+}
+
+svg {
+  background-color: black;
+  opacity: 0.8;
+}
+
+.enemies {
+  fill: white;
+}
+
+.player {
+  fill: orange;
+}
