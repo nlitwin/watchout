@@ -15,7 +15,21 @@ var gameStats = {
 
 var gameBoard = d3.select('.gameBoard').append('svg:svg')
                   .attr('width', gameOptions.width)
-                  .attr('height', gameOptions.height);
+                  .attr('height', gameOptions.height)
+gameBoard.append('defs')
+          .append('pattern')
+          .attr('id', 'image')
+          .attr('x', '0')
+          .attr('y', '0')
+          //.attr('patternUnits', 'userSpaceOnUse')
+          .attr('height', '20')
+          .attr('width', '20')
+          .append('image')
+          .attr('x', '0')
+          .attr('y', '0')
+          .attr('height', '20')
+          .attr('width', '20')
+          .attr('xlink:href', './shuriken.png');
 
 // Initalize Enemy Data
 
@@ -46,7 +60,8 @@ var enemies = gameBoard.selectAll('circle')
   .attr('cy', function(d){
     return d.cy;
   })
-  .attr('r', '10');
+  .attr('r', '10')
+  .attr('fill', 'url(#image)');
 
 // Initialize PLAYER
 var player = gameBoard.selectAll('circle.player')
@@ -153,5 +168,7 @@ var drag = d3.behavior.drag().on('drag', function(){
 });
 d3.selectAll(".player").call(drag);
 
-
-
+/*
+var image = document.body.getElementsByClassName('test');
+image.setAttributeNS('w3.org/1999/xlink', 'href', 'shuriken.png')
+*/
