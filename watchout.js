@@ -1,7 +1,7 @@
 var gameOptions = {
   height: 450,
   width: 700,
-  nEnemies: 10,
+  nEnemies: 30,
   padding: 20
 };
 
@@ -16,11 +16,11 @@ var gameStats = {
 var gameBoard = d3.select('.gameBoard').append('svg:svg')
                   .attr('width', gameOptions.width)
                   .attr('height', gameOptions.height);
-                  //.style('background-color', 'white');
+
+// Initalize Enemy Data
 
 var enemyPositions = [];
 
-// create & push enemies to the array
 function shuffle() {
   for (var i = 0; i < gameOptions.nEnemies; i++) {
     var o = {
@@ -34,7 +34,7 @@ function shuffle() {
 
 shuffle();
 
-//initialize enemies
+// Initialize enemies
 var enemies = gameBoard.selectAll('circle')
   .data(enemyPositions)
   .enter()
@@ -48,11 +48,33 @@ var enemies = gameBoard.selectAll('circle')
   })
   .attr('r', '10');
 
+// Initialize PLAYER
+var player = gameBoard.selectAll('circle.player')
+  .data([{
+    cx: gameOptions.width / 2,
+    cy: gameOptions.height / 2,
+    r: 10
+  }])
+  .enter()
+  .append('svg:circle')
+  .attr('class', 'player')
+  .attr('cx', function(d){
+    return d.cx;
+  })
+  .attr('cy', function(d){
+    return d.cy;
+  })
+  .attr('r', function(d){
+    return d.r;
+  });
+
 function update(){
   enemies.data(enemyPositions)
     .transition().duration(2000)
     .tween('custom', tweenWithCollisionDetection);
 }
+
+// COLLISION
 
 function tweenWithCollisionDetection(endData){
   var enemy = d3.select(this);
@@ -65,7 +87,7 @@ function tweenWithCollisionDetection(endData){
     y: endData.cy
   }
   return function(t){
-    checkCollision(enemy, onCollision);
+    checkCollision(enemy);
     var enemyNextPos = {
       x: startPos.x + (endPos.x - startPos.x) * t,
       y: startPos.y + (endPos.y - startPos.y) * t
@@ -80,15 +102,15 @@ function tweenWithCollisionDetection(endData){
   };
 }
 
-function checkCollision(enemy, onCollision){
+var throttledOnCollision = _.throttle(onCollision, 500, {trailing: false});
+
+function checkCollision(enemy){
   var radiusSum =  parseFloat(enemy.attr('r')) + parseFloat(player.attr('r'));
   var xDiff = parseFloat(enemy.attr('cx')) - parseFloat(player.attr('cx'));
   var yDiff = parseFloat(enemy.attr('cy')) - parseFloat(player.attr('cy'));
   var separation = Math.sqrt( Math.pow(xDiff,2) + Math.pow(yDiff,2) );
   if (separation < radiusSum){
-    // Collision
-    //
-    onCollision();
+    throttledOnCollision();
   }
 }
 
@@ -110,25 +132,9 @@ setInterval(function(){
   update();
 }, 2000);
 
-var player = gameBoard.selectAll('circle.player')
-  .data([{
-    cx: gameOptions.width / 2,
-    cy: gameOptions.height / 2,
-    r: 10
-  }])
-  .enter()
-  .append('svg:circle')
-  .attr('class', 'player')
-  .attr('cx', function(d){
-    return d.cx;
-  })
-  .attr('cy', function(d){
-    return d.cy;
-  })
-  .attr('r', function(d){
-    return d.r;
-  });
 
+
+// DRAG
 var drag = d3.behavior.drag().on('drag', function(){
   var newX, newY;
   if (d3.event.x > gameOptions.width) {
